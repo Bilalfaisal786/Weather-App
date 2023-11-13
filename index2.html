@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        animation: changeBg 10s Linear infinite;
+
+
+    }
+
+    @keyframes changeBg {
+        0% {
+            background-color: #9c27b0;
+        }
+
+        20% {
+            background-color: #009688;
+        }
+
+        40% {
+            background-color: #2196f3;
+        }
+
+        60% {
+            background-color: #ff5722;
+        }
+
+        80% {
+            background-color: yellowgreen;
+        }
+
+        100% {
+            background-color: #9c27b0;
+        }
+
+    }
+
+    h1 {
+        text-align: center;
+        margin-left: 1.75em;
+    }
+
+    form {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"] {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button[type="submit"] {
+        padding: 5px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    #result {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1>
+        Weather App
+    </h1>
+    <form onsubmit="getWeather(); return false">
+        <label for="cityname">City Name &nbsp; </label>
+        <input type="text" name="cityname" id="cityname" placeholder="Enter City Name">
+        <br>
+        <br>
+        <button type="submit">Get Weather</button>
+
+    </form>
+    <br>
+    <div id="result">
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script type="module">
+        window.getWeather = function () {
+            let cityname = document.querySelector("#cityname").value;
+
+            let API_key = "e0f99c494c2ce394a18cc2fd3f100543";
+
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${API_key}&units=metric`)
+
+
+                .then(function (response) {
+                    // handle success
+                    console.log(response.data);
+                    document.querySelector("#result").innerHTML = `Current Temperature of ${response.data.name} is ${response.data.main.temp}°C`;
+                })
+
+
+                .catch(function (error) {
+                    // handle error
+                    console.log(error.data);
+                    document.querySelector("#result").innerHTML = "Error in getting weather data"
+                })
+        }
+
+    </script>
+
+</body>
+
+</html>
